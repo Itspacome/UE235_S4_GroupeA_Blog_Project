@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Bienvenue !{% endblock %}</title>
+        {% block stylesheets %}
+	        {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-warning mb-5">
+            <div class="container">
+                <a class="navbar-brand" href="{{ path('article_index') }}">Blog de l'UE 235</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        {% if categories is defined %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Catégories d'articles
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        {% for category in categories %}
+                                <a class="dropdown-item" href="{{ path('category_show', {'id': category.id}) }}">{{ category.name }}</a>
+                        {% endfor %}
+                            </div>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('category_index') }}">Catégories d'articles</a>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('article_new') }}">Écrire un article</a>
+                        </li>
+                        {% if articles is defined %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Articles à voir
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        {% for article in articles %}
+                                <a class="dropdown-item" href="{{ path('article_show', {'id': article.id}) }}">{{ article.title }}</a>
+                        {% endfor %}
+                            </div>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('article_index') }}">Articles à voir</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        {% block body %}{% endblock %}
+
+        {% block javascripts %}
+        	{{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </body>
+</html>
