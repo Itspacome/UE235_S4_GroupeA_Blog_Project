@@ -24,11 +24,15 @@ class ArticleController extends AbstractController
         si je suis sur la page 1 → 1 * 4 = 4 - 4 = 0 donc je partirais de 0
         sur la page 2 → 2 * 4 = 8 - 4 = 4 donc je partirais de 4 */
         $limit = 4; 
-        $start = $page * $limit - $limit;
+        $start = $page * $limit - $limit;                       /*définit le départ d'affichage de chaque page*/
+        $nbArticles = count($articleRepository->findAll());     /*contient le nombre total d'article*/
+        $nbPages    = ceil($nbArticles / $limit);               /*nb total de pages*/
 
         return $this->render('article/index.html.twig', [
             /*findBy() au lieu de findAll() pour select seulement les éléments voulus*/
             'articles' => $articleRepository->findBy([], [], $limit, $start), /*1er [] vide permet de filtrer la recherche, 2eme [] vide permet d'ordonner éléments*/
+            'nb_pages'    => $nbPages,
+            'actual_page' => $page
         ]);
     }
 
