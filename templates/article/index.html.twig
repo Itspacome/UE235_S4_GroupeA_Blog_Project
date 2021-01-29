@@ -43,21 +43,21 @@
 
     {# Pagination #}
 
-    <nav class="d-flex justify-content-center">
+    <nav class="d-flex justify-content-center">                                     {# pagination centrée #}
         <ul class="pagination">
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
+            <li class="page-item {% if actual_page == 1 %}disabled{% endif %}">     {# précédent disabled si on est déjà sur la première page #}
+              <a class="page-link" href="{{ path('article_index', {'page': actual_page - 1}) }}" aria-label="Précédent">
                 <span aria-hidden="true">&laquo;</span>
-                <span class="sr-only">Previous</span>
+                <span class="sr-only">Précédent</span>
               </a>
             </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
+            {% for i in 1..nb_pages %}
+                <li class="page-item {% if actual_page == i %}active{% endif %}"><a class="page-link" href="{{ path('article_index', {'page': i}) }}">{{ i }}</a></li>
+            {% endfor %}
+            <li class="page-item {% if actual_page == nb_pages %}disabled{% endif %}">
+              <a class="page-link" href="{{ path('article_index', {'page': actual_page + 1}) }}" aria-label="Suivant">
                 <span aria-hidden="true">&raquo;</span>
-                <span class="sr-only">Next</span>
+                <span class="sr-only">Suivant</span>
               </a>
             </li>
         </ul>
