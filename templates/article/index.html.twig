@@ -3,47 +3,35 @@
 {% block title %}Article index{% endblock %}
 
 {% block body %}
-    <h1>Article index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Category</th>
-                <th>Content</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for article in articles %}
-            <tr>
-                <td>{{ article.id }}</td>
-                <td>{{ article.title }}</td>
-                <td>
-                    {% if article.Category.name is defined %}
-                        {{ article.Category.name }}
-                    {% endif %}
-                </td>
-                <td>{{ article.content }}</td>
-                <td>
-                    <a href="{{ path('article_show', {'id': article.id}) }}">show</a>
-                    <a href="{{ path('article_edit', {'id': article.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('article_new') }}">Create new</a>
+    <div class="container">
+        <div class="row">
+            <div class="container">
+                <h1 class="text-center mb-5">Articles</h1>
+                <div class="row">
+                    {% for article in articles %}
+                    <div class="col-lg-6">
+                        <h2 class="col-lg-12 text-center">
+                            {{ article.title }}
+                        </h2>
+                        <small class="col-lg-12 text-center mb-5 font-weight-light font-italic">
+                            {{ article.Category.name }}
+                        </small>
+                        <div class="col-lg-12 mb-3 text-justify">
+                            {{ article.content }}
+                        </div>
+                        <div class="col-lg-12">
+                            <a href="{{ path('article_show', {'id': article.id}) }}" class="btn btn-outline-dark" role="button">Voir <i class="fas fa-eye"></i></a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
 
     {# Pagination #}
 
-    <nav class="d-flex justify-content-center">                                     {# pagination centrée #}
+    <nav class="d-flex justify-content-center mt-5">                                     {# pagination centrée #}
         <ul class="pagination">
             <li class="page-item {% if actual_page == 1 %}disabled{% endif %}">     {# précédent disabled si on est déjà sur la première page #}
               <a class="page-link" href="{{ path('article_index', {'page': actual_page - 1}) }}" aria-label="Précédent">
