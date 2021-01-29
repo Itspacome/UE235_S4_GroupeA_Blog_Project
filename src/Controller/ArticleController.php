@@ -16,12 +16,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class ArticleController extends AbstractController
 {
     /**
-     * @Route("/", name="article_index", methods={"GET"})
+     * @Route("/{page}", name="article_index", methods={"GET"}, requirements={"page": "\d+"})
      */
-    public function index(ArticleRepository $articleRepository): Response
+    public function index(ArticleRepository $articleRepository, $page = 1): Response /*par défaut la page est 1*/
     {
+        /* sytème de pagination grâce à des limites pour gérer l'affichage suivant..., exemple :
+        si je suis sur la page 1 → 1 * 4 = 4 - 4 = 0 donc je partirais de 0
+        sur la page 2 → 2 * 4 = 8 - 4 = 4 donc je partirais de 4 */
+        $limit = 4; 
+        $start = $page * $limit - $limit;
+
         return $this->render('article/index.html.twig', [
-            'articles' => $articleRepository->findAll(),
+            /*findBy() au lieu de findAll() pour select seulement les éléments voulus*/
+            'articles' => $articleRepository->findBy([], [], $limit, $start), /*1er [] vide permet de filtrer la recherche, 2eme [] vide permet d'ordonner éléments*/
         ]);
     }
 
