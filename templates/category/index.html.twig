@@ -1,35 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Category index{% endblock %}
+{% block title %}Catégories{% endblock %}
 
 {% block body %}
-    <h1>Category index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for category in categories %}
-            <tr>
-                <td>{{ category.id }}</td>
-                <td>{{ category.name }}</td>
-                <td>
-                    <a href="{{ path('category_show', {'id': category.id}) }}">show</a>
-                    <a href="{{ path('category_edit', {'id': category.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('category_new') }}">Create new</a>
+<div class="container">
+    <div class="row">
+        <div class="container">
+            <h1 class="text-center mb-5">Catégories</h1>
+            <table class="table table-striped table-bordered mb-5">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for category in categories %}
+                    <tr>
+                        <th scope="row">{{ category.id }}</th>
+                        <td>{{ category.name }}</td>
+                        <td class="text-center">
+                            <a class="btn btn-outline-success" href="{{ path('category_show', {'id': category.id}) }}">Voir <i class="fas fa-eye"></i></a>
+                            <a class="btn btn-outline-danger" href="{{ path('category_edit', {'id': category.id}) }}">Modifier <i class="fas fa-edit"></i></a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12 text-center">
+    <a class="btn btn-outline-info" href="{{ path('category_new') }}">Créer une nouvelle catégorie</a>
+</div>
 {% endblock %}
