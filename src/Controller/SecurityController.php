@@ -6,11 +6,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use App\Entity\User;
+use App\Form\RegistrationType;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class SecurityController extends AbstractController
 {
     /**
      * @Route("/login", name="app_login")
+     *
+     * @return Response
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -28,9 +35,44 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/logout", name="app_logout")
+     *
+     * @return void
      */
     public function logout()
     {
-        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+
+    }
+
+    /**
+     *
+     * @Route("/register", name="app_register")
+     * 
+     * @return Response    
+     */
+    public function register(Request $request, EntityManagerInterface $emanager, UserPasswordEncoderInterface $encoder) {
+        $user = new User();
+
+        $form = $this->createForm(RegistrationType::class, $user);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $password = $encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($password);
+
+            $emanager->persist($user);
+            $emanager->flush();
+
+            $this->addFlash(
+                'success',
+                "Compte créé avec succès, vous pouvez vous connecter !"
+            );
+
+            return $this->redirectToRoute('app_login');
+        }
+
+        return $this->render('security/registration.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }
