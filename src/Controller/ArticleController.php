@@ -23,7 +23,7 @@ class ArticleController extends AbstractController
         /* sytème de pagination grâce à des limites pour gérer l'affichage suivant..., exemple :
         si je suis sur la page 1 → 1 * 4 = 4 - 4 = 0 donc je partirais de 0
         sur la page 2 → 2 * 4 = 8 - 4 = 4 donc je partirais de 4 */
-        $limit = 4; 
+        $limit = 8; 
         $start = $page * $limit - $limit;                       /*définit le départ d'affichage de chaque page*/
         $nbArticles = count($articleRepository->findAll());     /*contient le nombre total d'article*/
         $nbPages    = ceil($nbArticles / $limit);               /*nb total de pages*/
