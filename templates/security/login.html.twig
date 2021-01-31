@@ -1,24 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Connexion{% endblock %}
 
 {% block body %}
-<form method="post" class="form_login w-75 ml-auto mr-auto">
+<form action="{{ path('app_login') }}" method="post" class="form_login w-75 ml-auto mr-auto">
     {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        <div class="alert alert-danger">Erreur ! Pseudo ou mot de passe invalide, veuillez réessayer.</div>
     {% endif %}
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
-        </div>
-    {% endif %}
-
-    <h1 class="h3 mb-3 pt-5 ml-5 font-weight-normal">Please sign in</h1>
-    <label for="inputPseudo">Pseudo</label>
-    <input type="text" value="{{ last_username }}" name="pseudo" id="inputPseudo" class=" mb-3 w-25 form-control" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="w-25 mb-2  form-control" required>
+    <h1 class="h3 mb-3 pt-5 ml-5 font-weight-normal">Connectez vous !</h1>
+    <label for="inputPseudo">Pseudo : </label>
+    <input type="text" value="{{ last_username }}" name="_username" id="inputPseudo" class=" mb-3 w-25 form-control" required autofocus>
+    <label for="inputPassword">Mot de passe : </label>
+    <input type="password" name="_password" id="inputPassword" class="w-25 mb-2  form-control" required>
 
     <input type="hidden" name="_csrf_token"
            value="{{ csrf_token('authenticate') }}"
@@ -36,7 +30,7 @@
     #}
 
     <button class="pt-15 btn btn-lg btn-primary ml-5 mt-2" type="submit">
-        Sign in
+        Connexion
     </button>
 </form>
 {% endblock %}
