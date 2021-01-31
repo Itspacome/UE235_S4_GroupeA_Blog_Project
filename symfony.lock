@@ -288,6 +288,9 @@
     "symfony/property-access": {
         "version": "v4.4.3"
     },
+    "symfony/proxy-manager-bridge": {
+        "version": "v4.4.19"
+    },
     "symfony/routing": {
         "version": "4.2",
         "recipe": {

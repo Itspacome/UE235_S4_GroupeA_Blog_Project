@@ -3,16 +3,16 @@
 {% block title %}Connexion{% endblock %}
 
 {% block body %}
-<form action="{{ path('app_login') }}" method="post" class="form_login w-75 ml-auto mr-auto">
+<form action="{{ path('app_login') }}" method="post" class="form_login" style="width: 50%; margin-left: 30%">
     {% if error %}
         <div class="alert alert-danger">Erreur ! Pseudo ou mot de passe invalide, veuillez réessayer.</div>
     {% endif %}
 
-    <h1 class="h3 mb-3 pt-5 ml-5 font-weight-normal">Connectez vous !</h1>
+    <h1 class="h3 mb-3 pt-5 font-weight-normal">Connectez vous !</h1>
     <label for="inputPseudo">Pseudo : </label>
-    <input type="text" value="{{ last_username }}" name="_username" id="inputPseudo" class=" mb-3 w-25 form-control" required autofocus>
+    <input type="text" value="{{ last_username }}" name="_username" id="inputPseudo" class=" mb-3 w-75 form-control" required autofocus>
     <label for="inputPassword">Mot de passe : </label>
-    <input type="password" name="_password" id="inputPassword" class="w-25 mb-2  form-control" required>
+    <input type="password" name="_password" id="inputPassword" class="w-75 mb-2 form-control" required>
 
     <input type="hidden" name="_csrf_token"
            value="{{ csrf_token('authenticate') }}"
@@ -29,7 +29,7 @@
         </div>
     #}
 
-    <button class="pt-15 btn btn-lg btn-primary ml-5 mt-2" type="submit">
+    <button class="pt-15 btn btn-lg btn-primary mt-2" type="submit">
         Connexion
     </button>
 </form>
