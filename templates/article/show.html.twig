@@ -16,6 +16,12 @@
                 <div class="col-lg-12 mb-3 text-justify">
                     {{ article.content }}
                 </div>
+                <div class="col-lg-12 mb-3 text-justify">
+                    __________
+                    <div>
+                        <p>Auteur : {{ article.author.pseudo }}</p>
+                    </div>
+                </div>
                 <div class="col-lg-6 mb-5 text-center">
                     <a href="{{ path('article_index') }}" class="btn btn-secondary btn-sm" role="button">Retour <i class="fas fa-undo-alt"></i></a>
                 </div>
