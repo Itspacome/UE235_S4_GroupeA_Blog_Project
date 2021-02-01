@@ -47,11 +47,14 @@ class ArticleController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $article->setAuthor($this->getUser());
             $entityManager->persist($article);
             $entityManager->flush();
 
             return $this->redirectToRoute('article_index');
         }
+
+        
 
         return $this->render('article/new.html.twig', [
             'article' => $article,
